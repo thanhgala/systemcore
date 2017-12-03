@@ -17,20 +17,20 @@ namespace SystemCore.Web
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
-            using (var scope = host.Services.CreateScope())
-            {
-                var service = scope.ServiceProvider;
-                try
-                {
-                    var dbInitializer = service.GetService<DbInitializer>();
-                    dbInitializer.Seed().Wait();
-                }
-                catch (Exception ex)
-                {
-                    var logger = service.GetService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while sedding the database");
-                }
-            }
+            //using (var scope = host.Services.CreateScope())
+            //{
+            //    var service = scope.ServiceProvider;
+            //    try
+            //    {
+            //        var dbInitializer = service.GetService<DbInitializer>();
+            //        dbInitializer.Seed().Wait();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        var logger = service.GetService<ILogger<Program>>();
+            //        logger.LogError(ex, "An error occurred while sedding the database");
+            //    }
+            //}
             host.Run();
         }
 

@@ -76,10 +76,12 @@ namespace SystemCore.Data.EF
             builder.AddConfiguration(new ContactDetailConfiguration());
             builder.AddConfiguration(new FooterConfiguration());
             builder.AddConfiguration(new PageConfiguration());
-            builder.AddConfiguration(new FooterConfiguration());
+            builder.AddConfiguration(new FunctionConfiguration());
             builder.AddConfiguration(new ProductTagConfiguration());
             builder.AddConfiguration(new SystemConfigConfiguration());
+            builder.AddConfiguration(new AdvertistmentPageConfiguration());
             builder.AddConfiguration(new AdvertistmentPositionConfiguration());
+            builder.AddConfiguration(new AnnouncementConfiguration());
 
             //base.OnModelCreating(builder);
         }

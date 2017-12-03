@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TeduCoreApp.Data.EF.Extensions
+namespace SystemCore.Data.EF.Extensions
 {
     public static class ModelBuilderExtensions
     {

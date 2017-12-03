@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using SystemCore.Data.EF;
 
 namespace SystemCore.Web
 {
@@ -14,7 +16,21 @@ namespace SystemCore.Web
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var host = BuildWebHost(args);
+            using (var scope = host.Services.CreateScope())
+            {
+                var service = scope.ServiceProvider;
+                try
+                {
+                    var dbInitializer = service.GetService<DbInitializer>();
+                    dbInitializer.Seed().Wait();
+                }
+                catch (Exception ex)
+                {
+                    var logger = service.GetService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while sedding the database");
+                }
+            }
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

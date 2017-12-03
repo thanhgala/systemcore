@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SystemCore.Data.Entities;
-using TeduCoreApp.Data.EF.Extensions;
-using Microsoft.EntityFrameworkCore;
+using SystemCore.Data.EF.Extensions;
 
 namespace SystemCore.Data.EF.Configurations
 {

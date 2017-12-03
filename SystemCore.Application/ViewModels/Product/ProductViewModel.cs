@@ -5,14 +5,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using SystemCore.Data.Enums;
-using SystemCore.Data.Interfaces;
-using SystemCore.Infrastructure.SharedKernel;
 
-namespace SystemCore.Data.Entities
+namespace SystemCore.Application.ViewModels.Product
 {
-    [Table("Products")]
-    public class Product : DomainEntity<int>, ISwitchable, IDateTracking, IHasSeoMetaData
+    public class ProductViewModel
     {
+        public int Id { get; set; }
+
         [StringLength(255)]
         [Required]
         public string Name { get; set; }
@@ -49,16 +48,17 @@ namespace SystemCore.Data.Entities
         [StringLength(255)]
         public string Unit { get; set; }
 
-        [ForeignKey("CategoryId")]
-        public virtual ProductCategory ProductCategory { set; get; }
+        public ProductCategoryViewModel ProductCategory { set; get; }
 
         public DateTime DateCreated { get; set; }
+
         public DateTime DateModified { get; set; }
+
         public Status Status { get; set; }
+
         [StringLength(255)]
         public string SeoPageTitle { get; set; }
 
-        [Column(TypeName ="varchar(255)")]
         [StringLength(255)]
         public string SeoAlias { get; set; }
 
@@ -67,6 +67,5 @@ namespace SystemCore.Data.Entities
 
         [StringLength(255)]
         public string SeoDescription { get; set; }
-        
     }
 }

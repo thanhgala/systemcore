@@ -7,15 +7,17 @@ using SystemCore.Infrastructure.SharedKernel;
 
 namespace SystemCore.Data.Entities
 {
-    [Table("Tags")]
-    public class Tag: DomainEntity<string>
+    [Table("Colors")]
+    public class Color : DomainEntity<int>
     {
-        [MaxLength(50)]
-        [Required]
-        public string Name { get; set; }
 
-        [MaxLength(50)]
-        [Required]
-        public string Type { get; set; }
+        [StringLength(250)]
+        public string Name
+        {
+            get; set;
+        }
+
+        [StringLength(250)]
+        public string Code { get; set; }
     }
 }

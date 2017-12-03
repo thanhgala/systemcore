@@ -31,6 +31,7 @@ namespace SystemCore.Web
                     logger.LogError(ex, "An error occurred while sedding the database");
                 }
             }
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

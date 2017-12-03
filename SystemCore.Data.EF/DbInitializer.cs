@@ -248,6 +248,7 @@ namespace SystemCore.Data.EF
                     Status = Status.Active
                 });
             }
+            _context.SaveChanges();
         }
     }
 }

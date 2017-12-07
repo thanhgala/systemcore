@@ -12,8 +12,8 @@ using SystemCore.Data.Enums;
 namespace SystemCore.Data.EF.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20171203182020_initial")]
-    partial class initial
+    [Migration("20171207075304_initialize")]
+    partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

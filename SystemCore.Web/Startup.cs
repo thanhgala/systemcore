@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using System;
 using SystemCore.Application.Implementation;
 using SystemCore.Application.Interfaces;
@@ -12,6 +14,8 @@ using SystemCore.Data.EF;
 using SystemCore.Data.EF.Repositories;
 using SystemCore.Data.Entities;
 using SystemCore.Data.IRepositories;
+using SystemCore.Infrastructure.Interfaces;
+using SystemCore.Web.Helpers;
 using SystemCore.Web.Services;
 
 namespace SystemCore.Web
@@ -65,16 +69,27 @@ namespace SystemCore.Web
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<DbInitializer>();
 
-            services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, CustomClaimsPrincipalFactory>();
 
-            services.AddMvc();
+            services.AddTransient(typeof(IUnitOfWork), typeof(EFUnitOfWork));
+            //services.AddTransient(typeof(IRepository<,>), typeof(EFRepository<,>));
+
+            //Repositories
+            services.AddTransient<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddTransient<IFunctionRepository, FunctionRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            //Service
+            services.AddTransient<IProductCategoryService, ProductCategoryService>();
+            services.AddTransient<IFunctionService, FunctionService>();
+            services.AddTransient<IProductService, ProductService>();
+
+            services.AddMvc().AddJsonOptions(options=>options.SerializerSettings.ContractResolver = new DefaultContractResolver());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-
+            loggerFactory.AddFile("Logs/bungbungshop-{Date}.txt");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -98,7 +113,7 @@ namespace SystemCore.Web
 
                 routes.MapRoute(
                     name: "areaRoute",
-                    template: "{area=exists}/{controller=Home}/{action=Index}/{id?}");
+                    template: "{area=exists}/{controller=Login}/{action=Index}/{id?}");
             });
         }
     }

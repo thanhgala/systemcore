@@ -117,7 +117,7 @@
             return number.toString();
         }
 
-        var a = number.toFixed(precision).split('.');
+        var a = number.toFixed(precison).split('.');
         a[0] = a[0].replace(/\d(?=(\d{3})+$)/g, '$&,');
         return a.join('.');
     },
@@ -137,3 +137,10 @@
         return roots;
     }
 }
+
+$(document).ajaxSend(function (e, xhr, options) {
+    if (options.type.toUpperCase() == "POST" || options.type.toUpperCase() == "PUT") {
+        var token = $('form').find("input[name='__RequestVerificationToken']").val();
+        xhr.setRequestHeader("RequestVerificationToken", token);
+    }
+});

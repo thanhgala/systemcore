@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SystemCore.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SystemCore.Web.Controllers
 {

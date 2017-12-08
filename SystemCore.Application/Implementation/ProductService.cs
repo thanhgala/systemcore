@@ -6,8 +6,10 @@ using System.Linq;
 using SystemCore.Application.Interfaces;
 using SystemCore.Application.ViewModels.Product;
 using SystemCore.Data.Entities;
+using SystemCore.Data.Enums;
 using SystemCore.Data.IRepositories;
 using SystemCore.Infrastructure.Interfaces;
+using SystemCore.Utilities.DTO;
 
 namespace SystemCore.Application.Implementation
 {
@@ -53,6 +55,30 @@ namespace SystemCore.Application.Implementation
         public void Dispose()
         {
             GC.SuppressFinalize(this);
+        }
+
+        public PageResult<ProductViewModel> GetAllPaging(int? categoryId, string keyworld, int page, int pageSize)
+        {
+            var query = _productRepository.FindAll(x => x.Status == Status.Active);
+            if (!string.IsNullOrEmpty(keyworld))
+                query = query.Where(x => x.Name.Contains(keyworld));
+            if (categoryId.HasValue)
+                query = query.Where(x => x.CategoryId == categoryId.Value);
+            int totalRow = query.Count();
+
+            query = query.OrderByDescending(x => x.DateCreated)
+                .Skip((page - 1) * pageSize).Take(pageSize);
+
+            var data = query.ProjectTo<ProductViewModel>().ToList();
+
+            var paginationSet = new PageResult<ProductViewModel>()
+            {
+                Results = data,
+                CurrentPage = page,
+                RowCount = totalRow,
+                PageSize = pageSize
+            };
+            return paginationSet;
         }
     }
 }

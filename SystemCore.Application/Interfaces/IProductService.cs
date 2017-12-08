@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SystemCore.Application.ViewModels.Product;
+using SystemCore.Utilities.DTO;
 
 namespace SystemCore.Application.Interfaces
 {
@@ -13,8 +14,10 @@ namespace SystemCore.Application.Interfaces
 
         void Delete(int id);
 
+        void Save();
+
         List<ProductViewModel> GetAll();
 
-        void Save();
+        PageResult<ProductViewModel> GetAllPaging(int? categoryId, string keyworld, int page, int pageSize);
     }
 }
